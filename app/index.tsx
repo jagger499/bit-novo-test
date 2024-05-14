@@ -12,6 +12,7 @@ import { RootState } from "@/redux/store";
 import { addPaymentInfo, setIdentifier, setUrl } from "@/redux/actions/paymentActions";
 import { useLanguages } from "@/hooks/useLanguage";
 import {  ToastAndroid } from 'react-native';
+import { CustomError } from "@/types/api";
 
 export default function Index() {
   const [description, onChangeDescription] = useState("");
@@ -36,9 +37,15 @@ export default function Index() {
         dispatch(setUrl({ url: response?.web_url }));
         router.push("/payment");
       }
-    } catch (e) {
-      ToastAndroid.show(t('requestError'), ToastAndroid.SHORT);
-      console.error(e);
+    } catch (error) {
+      const { response = {} } = error  as CustomError;
+      const { data = {} } = response;
+      const { detail = "" } = data;
+      if (detail) {
+        ToastAndroid.show(`${detail} `, ToastAndroid.SHORT);
+      } else {
+        ToastAndroid.show(`${t('requestError')} `, ToastAndroid.SHORT);
+      }
     } finally {
       setLoad(false);
     }

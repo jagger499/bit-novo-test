@@ -1,3 +1,5 @@
+import { AxiosResponse } from "axios";
+
 export interface OrderData {
   amount: number;
   description: string;
@@ -18,4 +20,12 @@ export interface OrderResponse {
   fiat: string;
   language: string;
   error?: string;
+}
+
+export interface CustomError {
+  response?: {
+    data?: {
+      detail?: string;
+    };
+  };
 }

@@ -15,7 +15,7 @@ import { shareContent, shareViaEmail, shareViaWhatsApp } from "@/utils/share";
 import { useLanguages } from "@/hooks/useLanguage";
 import { router } from "expo-router";
 import { HalfScreenModal } from "@/components/modal";
-import { isValidEmail } from "@/utils";
+import { isValidEmail, isValidPhone } from "@/utils";
 
 export default function Payment() {
   const [phone, onChangePhone] = useState("");
@@ -39,7 +39,10 @@ export default function Payment() {
   };
 
   const handlelShareWap = async () => {
-
+    if (!isValidPhone(phone)) {
+      ToastAndroid.show(t('sharePhoneInvalid'), ToastAndroid.SHORT);
+      return;
+    }
     const res = await shareViaWhatsApp(t, `${countryCode}${phone}`, `${url}`);
     if (res) {
       setOpen(true);
