@@ -13,6 +13,7 @@ import { themes } from "@/styles/theme";
 import { Image } from "expo-image";
 import { ButtonFactory } from "../buttons";
 import { typeButtons } from "@/types/components/buttons";
+import { useLanguages } from "@/hooks/useLanguage";
 
 export const CustomTextInput: React.FC<CustomInputProps & TextInputProps> = ({
   inputType,
@@ -29,6 +30,7 @@ export const CustomTextInput: React.FC<CustomInputProps & TextInputProps> = ({
   ...props
 }) => {
   const [isFocused, setIsFocused] = useState(false);
+  const {t} = useLanguages();
 
   const rowContainer = icon ? styles.inputTextIconContainer : {};
   const scalate = icon ? { flex: 1 } : {};
@@ -65,12 +67,12 @@ export const CustomTextInput: React.FC<CustomInputProps & TextInputProps> = ({
           selectionColor={themes.colors.primaryButton}
         />
         {onPressButton && (isFocused || value?.length > 0) && (
-          <ButtonFactory onPress={onPressButton} title={"Enviar"} typeButton={typeButtons.input} />
+          <ButtonFactory onPress={onPressButton} title={t("buttonsSend")} typeButton={typeButtons.input} />
         )}
       </View>
       {(isFocused || value?.length > 0) && maxLength && (
         <Text style={styles.maxLengthText}>
-          {value?.length}/{maxLength} caracteres
+          {value?.length}/{maxLength} {t('buttonsCaracters')}
         </Text>
       )}
       {qr && <ButtonFactory typeButton={typeButtons.qr} />}

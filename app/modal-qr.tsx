@@ -8,8 +8,10 @@ import { styles } from "@/styles/app/qrModal";
 import { width } from "@/styles/theme";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
+import { useLanguages } from "@/hooks/useLanguage";
 
 export default function ModalQr() {
+  const { t } = useLanguages();
   const url = useSelector((state: RootState) => state.url);
   const payment = useSelector((state: RootState) => state.payment);
   const { total, currency } = payment;
@@ -21,7 +23,7 @@ export default function ModalQr() {
           style={{ width: 20, height: 20 }}
         />
         <Text style={styles.warningText}>
-          Escanea el QR y serás redirigido a la pasarela de pago de Bitnovo Pay.
+          {t("qrWarningText")}
         </Text>
       </View>
       <View style={{ marginBottom: 20 }} />
@@ -50,7 +52,7 @@ export default function ModalQr() {
         </Text>
         <View style={{ marginBottom: 10 }} />
         <Text style={styles.qrText}>
-          Esta pantalla se actualizará automáticamente.
+          {t("qrUpdateText")}
         </Text>
       </View>
     </Container>

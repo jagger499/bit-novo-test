@@ -6,9 +6,11 @@ import { FlashList } from "@shopify/flash-list";
 import { ListItem } from "./listItem";
 import { normalizeString } from "@/utils";
 import { SearchListProps } from "@/types/components/list";
+import { useLanguages } from "@/hooks/useLanguage";
 
 export const SearchList: React.FC<SearchListProps> = ({ value, onChangeValue, data }) => {
   const [search, setSearch] = useState("");
+  const {t} = useLanguages();
 
   const filterDataByTitleAndSubTitle = (searchText: string) => {
     if (!searchText) return data;
@@ -24,7 +26,7 @@ export const SearchList: React.FC<SearchListProps> = ({ value, onChangeValue, da
     <>
       <InputFactory
         inputType={CustomInputTypes.Text}
-        placeholder="Buscar"
+        placeholder={t('listSearch')}
         onChangeText={setSearch}
         value={search}
         icon={require("@/assets/svg/Search.svg")}

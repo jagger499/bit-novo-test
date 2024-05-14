@@ -12,19 +12,46 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { useWebSocket } from "@/hooks/useWebsocket";
 import { shareContent, shareViaEmail, shareViaWhatsApp } from "@/utils/share";
+import { useLanguages } from "@/hooks/useLanguage";
+import { router } from "expo-router";
+import { HalfScreenModal } from "@/components/modal";
 
 export default function Payment() {
-  const [phone, onChangePhone] = useState('');
-  const [mail, onChangeMail] = useState('');
+  const [phone, onChangePhone] = useState("");
+  const [mail, onChangeMail] = useState("");
+  const [open, setOpen] = useState(false);
+  const { t } = useLanguages();
   const url = useSelector((state: RootState) => state.url);
   const payment = useSelector((state: RootState) => state.payment);
   const countryCode = useSelector((state: RootState) => state.country?.title);
   const { total, currency } = payment;
 
+  const handleShareEmail = async () => {
+    const res = await shareViaEmail(`${mail}`, `payment link: ${url}`);
+    if (res) {
+      setOpen(true);
+    }
+  };
+
+  const handlelShareWap = async () => {
+    const res = await shareViaWhatsApp(`${countryCode}${phone}`, `${url}`);
+    if (res) {
+      setOpen(true);
+    }
+  };
+
+  const handleShare = async () => {
+    const res = await shareContent(`${url}`, "share payment");
+    if (res) {
+      setOpen(true);
+    }
+  };
+
   useWebSocket();
 
   return (
     <Container button>
+      <HalfScreenModal open={open} setOpen={setOpen} />
       <View style={[generalStyles.flexCenter, styles.card]}>
         <View style={generalStyles.flexRow}>
           <Image
@@ -32,7 +59,7 @@ export default function Payment() {
             style={{ width: 58, height: 58 }}
           />
           <View>
-            <Text style={styles.text}>Solicitud de pago</Text>
+            <Text style={styles.text}>{t("paymentSolicitude")}</Text>
             <Text style={styles.currency}>
               {currency?.subTitle === "USD" && <Text>$ </Text>}
               {currency?.subTitle === "GBP" && <Text>£ </Text>}
@@ -42,9 +69,7 @@ export default function Payment() {
           </View>
         </View>
         <View style={{ marginBottom: 10 }} />
-        <Text style={styles.text}>
-          Comparte el enlace de pago con el cliente
-        </Text>
+        <Text style={styles.text}>{t("paymentShareLink")}</Text>
       </View>
       <View style={{ marginBottom: 20 }} />
       <View style={styles.form}>
@@ -58,12 +83,10 @@ export default function Payment() {
         <InputFactory
           value={mail}
           onChangeText={onChangeMail}
-          onPressButton={() =>
-            shareViaEmail(`${mail}`, `payment link: ${url}`)
-          }
+          onPressButton={handleShareEmail}
           icon={require("@/assets/svg/Sms.svg")}
           inputType={CustomInputTypes.Text}
-          placeholder={"Enviar por correo electrónico"}
+          placeholder={t("paymentMailPlaceholder")}
         />
         <InputFactory
           phone
@@ -72,24 +95,23 @@ export default function Payment() {
           keyboardType="numeric"
           icon={require("@/assets/svg/Whatsapp.svg")}
           inputType={CustomInputTypes.Text}
-          placeholder={"Enviar a número de WhatsApp"}
-          onPressButton={() =>
-            shareViaWhatsApp(`${countryCode}${phone}`, `${url}`)
-          }
+          placeholder={t("paymentWapPlaceholder")}
+          onPressButton={handlelShareWap}
         />
         <InputFactory
           editable={false}
-          onPress={() => shareContent(`${url}`, 'share payment')}
+          onPress={handleShare}
           icon={require("@/assets/svg/Export.svg")}
           inputType={CustomInputTypes.Text}
-          placeholder={"Compartir con otras aplicaciones"}
+          placeholder={t("paymentSharePlaceholder")}
         />
       </View>
       <View style={{ marginBottom: 20 }} />
       <ButtonFactory
         secondary
+        onPress={() => router.replace("/")}
         icon={require("@/assets/svg/Wallet.svg")}
-        title="Nueva solicitud"
+        title={t("paymentNewSolicitude")}
         typeButton={typeButtons.bottom}
       />
     </Container>

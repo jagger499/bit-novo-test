@@ -3,14 +3,11 @@ import { ContainerProps } from "@/types/components/container";
 import {
   KeyboardAvoidingView,
   ScrollView,
-  Text,
   View,
   ViewProps,
 } from "react-native";
 import { styles } from "@/styles/components/container";
 import { useKeyboardVisibility } from "@/hooks/useKeyboardVisibility";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 
 export const Container: React.FC<ContainerProps & ViewProps> = ({
   children,

@@ -6,9 +6,11 @@ import { Header } from "@/components/header";
 import { ButtonFactory } from "@/components/buttons";
 import { typeButtons } from "@/types/components/buttons";
 import { useFontAndSplashScreen } from "@/hooks/useFontAndSplashScreen";
+import { useLanguages } from "@/hooks/useLanguage";
 
 export default function RootLayout() {
   const { fontsLoaded, fontError, onLayoutRootView } = useFontAndSplashScreen();
+  const { t } = useLanguages();
 
   if (!fontsLoaded && !fontError) {
     return null;
@@ -21,7 +23,10 @@ export default function RootLayout() {
           name="index"
           options={{
             headerTitle: () => (
-              <Header onLayout={onLayoutRootView} title="Crear pago" />
+              <Header
+                onLayout={onLayoutRootView}
+                title={t("layoutIndexTitle")}
+              />
             ),
             headerRight: () => (
               <ButtonFactory
@@ -30,17 +35,14 @@ export default function RootLayout() {
                 onLayout={onLayoutRootView}
               />
             ),
+            headerBackVisible: false,
           }}
         />
         <Stack.Screen
           name="modal-qr"
           options={{
             headerTitle: () => (
-              <Header
-                onLayout={onLayoutRootView}
-                modal
-                title=""
-              />
+              <Header onLayout={onLayoutRootView} modal title="" />
             ),
             headerLeft: () => <ButtonFactory typeButton={typeButtons.back} />,
             headerBackVisible: false,
@@ -54,7 +56,7 @@ export default function RootLayout() {
               <Header
                 onLayout={onLayoutRootView}
                 modal
-                title="Selecciona una divisa"
+                title={t("layoutSearchModalTitle")}
               />
             ),
             headerLeft: () => <ButtonFactory typeButton={typeButtons.back} />,
@@ -65,7 +67,7 @@ export default function RootLayout() {
         <Stack.Screen
           name="payment"
           options={{
-            headerShown: false
+            headerShown: false,
           }}
         />
       </Stack>

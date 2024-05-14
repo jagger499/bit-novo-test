@@ -10,6 +10,8 @@ import { createOrder } from "@/api/order";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { addPaymentInfo, setIdentifier, setUrl } from "@/redux/actions/paymentActions";
+import { useLanguages } from "@/hooks/useLanguage";
+import {  ToastAndroid } from 'react-native';
 
 export default function Index() {
   const [description, onChangeDescription] = useState("");
@@ -17,10 +19,10 @@ export default function Index() {
   const [load, setLoad] = useState(false);
   const currency = useSelector((state: RootState) => state.payment.currency);
   const dispatch = useDispatch();
+  const {t} = useLanguages();
 
   const handleContinue = async () => {
     try {
-      console.log('start');
       setLoad(true);
       const price = parseFloat(amount) * (currency?.exchangeRate || 1);
       const response = await createOrder({
@@ -35,6 +37,7 @@ export default function Index() {
         router.push("/payment");
       }
     } catch (e) {
+      ToastAndroid.show(t('requestError'), ToastAndroid.SHORT);
       console.error(e);
     } finally {
       setLoad(false);
@@ -62,15 +65,15 @@ export default function Index() {
         multiline
         clearTextOnFocus
         maxLength={140}
-        label={"Concepto"}
+        label={t("descriptionLabel")}
         inputType={CustomInputTypes.Text}
         onChangeText={onChangeDescription}
         value={description}
-        placeholder="Añade descripción del pago"
+        placeholder={t("descriptionPlaceholder")}
       />
       <View style={{ marginBottom: 30 }} />
       <ButtonFactory
-        title={"Continuar"}
+        title={t("continue")}
         onPress={handleContinue}
         typeButton={typeButtons.bottom}
         disabled={amount.length === 0 || description.length === 0 || load}
