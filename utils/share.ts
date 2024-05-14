@@ -1,5 +1,6 @@
 import { Linking } from "react-native";
 import { Share } from "react-native";
+import { ToastAndroid } from "react-native";
 
 export const shareContent = (message: string, title: string): Promise<boolean> => {
   return Share.share({
@@ -14,13 +15,13 @@ export const shareContent = (message: string, title: string): Promise<boolean> =
     });
 };
 
-export const shareViaWhatsApp = (phoneNumber: string, url: string): Promise<boolean> => {
+export const shareViaWhatsApp = (t: Function, phoneNumber: string, url: string): Promise<boolean> => {
   const whatsappUrl = `whatsapp://send?phone=${phoneNumber}&text=${encodeURIComponent(url)}`;
 
   return Linking.canOpenURL(whatsappUrl)
     .then((supported) => {
       if (!supported) {
-        console.log("WhatsApp no está instalado en este dispositivo.");
+        ToastAndroid.show(t('shareWapNotSupport'), ToastAndroid.SHORT);
         return false;
       }
       Linking.openURL(whatsappUrl);
@@ -32,7 +33,7 @@ export const shareViaWhatsApp = (phoneNumber: string, url: string): Promise<bool
     });
 };
 
-export const shareViaEmail = (email: string, body: string): Promise<boolean> => {
+export const shareViaEmail = (t: Function, email: string, body: string): Promise<boolean> => {
   const emailUrl = `mailto:${email}?subject=${encodeURIComponent(
     "payment link"
   )}&body=${encodeURIComponent(body)}`;
@@ -40,8 +41,9 @@ export const shareViaEmail = (email: string, body: string): Promise<boolean> => 
   return Linking.canOpenURL(emailUrl)
     .then((supported) => {
       if (!supported) {
+        ToastAndroid.show(t('shareMailNotSupport'), ToastAndroid.SHORT);
         console.log(
-          "El cliente de correo electrónico no está disponible en este dispositivo."
+          
         );
         return false;
       }

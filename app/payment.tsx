@@ -27,14 +27,14 @@ export default function Payment() {
   const { total, currency } = payment;
 
   const handleShareEmail = async () => {
-    const res = await shareViaEmail(`${mail}`, `payment link: ${url}`);
+    const res = await shareViaEmail(t, `${mail}`, `payment link: ${url}`);
     if (res) {
       setOpen(true);
     }
   };
 
   const handlelShareWap = async () => {
-    const res = await shareViaWhatsApp(`${countryCode}${phone}`, `${url}`);
+    const res = await shareViaWhatsApp(t, `${countryCode}${phone}`, `${url}`);
     if (res) {
       setOpen(true);
     }
