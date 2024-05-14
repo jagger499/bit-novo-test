@@ -33,6 +33,7 @@ export const SearchList: React.FC<SearchListProps> = ({ value, onChangeValue, da
       />
       <View style={{ marginBottom: 20 }} />
       <FlashList
+        testID="search-list"
         renderItem={({ item }) => {
           const { title, subTitle, image } = item;
           return (

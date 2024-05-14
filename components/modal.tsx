@@ -16,6 +16,7 @@ export const HalfScreenModal: React.FC<ModalSuccessProps> = ({
 
   return (
     <Modal
+      testID="modal"
       animationType="slide"
       transparent={true}
       visible={open}

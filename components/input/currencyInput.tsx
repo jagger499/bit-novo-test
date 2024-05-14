@@ -36,15 +36,29 @@ export const CurrencyInput: React.FC<CustomInputProps & TextInputProps> = ({
     maxWidth: width - 100,
   };
 
-  const textStyles: TextStyle[] = [styles.inputCurrencyText, focusCurrencyTextStyles];
+  const textStyles: TextStyle[] = [
+    styles.inputCurrencyText,
+    focusCurrencyTextStyles,
+  ];
   placeHolderColor = isFocused
     ? themes.colors.transparent
     : themes.colors.darkText;
 
   return (
-    <View style={[styles.inputCurrencyContainer]}>
-      {currency?.subTitle === 'USD' && <Text style={textStyles}>$</Text>}
-      {currency?.subTitle === 'GBP' && <Text style={textStyles}>£</Text>}
+    <View
+      style={[styles.inputCurrencyContainer]}
+      testID="currency-input-container"
+    >
+      {currency?.subTitle === "USD" && (
+        <Text style={textStyles} testID="usd-currency-symbol">
+          $
+        </Text>
+      )}
+      {currency?.subTitle === "GBP" && (
+        <Text style={textStyles} testID="gbp-currency-symbol">
+          £
+        </Text>
+      )}
       <View style={[styles.inputCurrencyContainerStyle]}>
         {icon && <Image source={icon} style={{ width: 20, height: 20 }} />}
         <TextInput
@@ -55,9 +69,14 @@ export const CurrencyInput: React.FC<CustomInputProps & TextInputProps> = ({
           style={[textStyles, { minWidth: 90 }, currencyWidth]}
           maxLength={maxLength}
           selectionColor={themes.colors.primaryButton}
+          testID="currency-text-input"
         />
       </View>
-      {currency?.subTitle === 'EUR' && <Text style={textStyles}>€</Text>}
+      {currency?.subTitle === "EUR" && (
+        <Text style={textStyles} testID="eur-currency-symbol">
+          €
+        </Text>
+      )}
     </View>
   );
 };

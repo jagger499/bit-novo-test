@@ -17,8 +17,9 @@ export default function ModalQr() {
   const { total, currency } = payment;
   return (
     <Container qr>
-      <View style={[generalStyles.flexRow, styles.backgroundText]}>
+      <View style={[generalStyles.flexRow, styles.backgroundText]} testID="warning-container">
         <Image
+          testID="info-image"
           source={require("@/assets/svg/Info.svg")}
           style={{ width: 20, height: 20 }}
         />
@@ -27,7 +28,7 @@ export default function ModalQr() {
         </Text>
       </View>
       <View style={{ marginBottom: 20 }} />
-      <View style={[styles.qrContainer, generalStyles.flexCenter]}>
+      <View style={[styles.qrContainer, generalStyles.flexCenter]} testID="qr-code-container">
         <QrCodeSvg
           value={`${url}`}
           contentCells={8}
@@ -42,8 +43,8 @@ export default function ModalQr() {
         />
       </View>
       <View style={{ marginBottom: 20 }} />
-      <View style={generalStyles.flexCenter}>
-        <Text style={styles.qrPrice}>
+      <View style={generalStyles.flexCenter} testID="price-container">
+        <Text style={styles.qrPrice} testID="qr-price">
           {" "}
           {currency?.subTitle === "USD" && <Text>$ </Text>}
           {currency?.subTitle === "GBP" && <Text>£ </Text>}
@@ -51,7 +52,7 @@ export default function ModalQr() {
           {currency?.subTitle === "EUR" && <Text> €</Text>}
         </Text>
         <View style={{ marginBottom: 10 }} />
-        <Text style={styles.qrText}>
+        <Text style={styles.qrText} testID="update-text">
           {t("qrUpdateText")}
         </Text>
       </View>

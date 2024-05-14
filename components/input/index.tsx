@@ -9,10 +9,10 @@ export const InputFactory: React.FC<CustomInputProps & TextInputProps> = ({
   ...props
 }) => {
   if (inputType === CustomInputTypes.Currency) {
-    return <CurrencyInput {...props} />
+    return <CurrencyInput {...props} />;
   }
   if (inputType === CustomInputTypes.Text) {
-    return <CustomTextInput {...props} />
+    return <CustomTextInput testID="text-input" {...props} />;
   }
   return <></>;
 };

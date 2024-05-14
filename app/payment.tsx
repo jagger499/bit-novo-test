@@ -56,17 +56,18 @@ export default function Payment() {
   useWebSocket();
 
   return (
-    <Container button>
+    <Container button testID="payment-screen">
       <HalfScreenModal open={open} setOpen={setOpen} />
-      <View style={[generalStyles.flexCenter, styles.card]}>
+      <View style={[generalStyles.flexCenter, styles.card]} testID="payment-info">
         <View style={generalStyles.flexRow}>
           <Image
             source={require("@/assets/svg/MoneyTime.svg")}
             style={{ width: 58, height: 58 }}
+            testID="money-icon"
           />
           <View>
-            <Text style={styles.text}>{t("paymentSolicitude")}</Text>
-            <Text style={styles.currency}>
+            <Text style={styles.text} testID="payment-solicitude">{t("paymentSolicitude")}</Text>
+            <Text style={styles.currency} testID="payment-amount">
               {currency?.subTitle === "USD" && <Text>$ </Text>}
               {currency?.subTitle === "GBP" && <Text>£ </Text>}
               {total}
@@ -75,7 +76,7 @@ export default function Payment() {
           </View>
         </View>
         <View style={{ marginBottom: 10 }} />
-        <Text style={styles.text}>{t("paymentShareLink")}</Text>
+        <Text style={styles.text} testID="share-link">{t("paymentShareLink")}</Text>
       </View>
       <View style={{ marginBottom: 20 }} />
       <View style={styles.form}>
@@ -85,6 +86,7 @@ export default function Payment() {
           icon={require("@/assets/svg/Link.svg")}
           inputType={CustomInputTypes.Text}
           placeholder={`${url}`}
+          testID="url-input"
         />
         <InputFactory
           value={mail}
@@ -93,6 +95,7 @@ export default function Payment() {
           icon={require("@/assets/svg/Sms.svg")}
           inputType={CustomInputTypes.Text}
           placeholder={t("paymentMailPlaceholder")}
+          testID="email-input"
         />
         <InputFactory
           phone
@@ -103,6 +106,7 @@ export default function Payment() {
           inputType={CustomInputTypes.Text}
           placeholder={t("paymentWapPlaceholder")}
           onPressButton={handlelShareWap}
+          testID="phone-input"
         />
         <InputFactory
           editable={false}
@@ -110,6 +114,7 @@ export default function Payment() {
           icon={require("@/assets/svg/Export.svg")}
           inputType={CustomInputTypes.Text}
           placeholder={t("paymentSharePlaceholder")}
+          testID="share-input"
         />
       </View>
       <View style={{ marginBottom: 20 }} />
@@ -119,6 +124,7 @@ export default function Payment() {
         icon={require("@/assets/svg/Wallet.svg")}
         title={t("paymentNewSolicitude")}
         typeButton={typeButtons.bottom}
+        testID="new-solicitude-button"
       />
     </Container>
   );

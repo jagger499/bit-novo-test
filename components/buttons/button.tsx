@@ -16,7 +16,7 @@ import { generalStyles } from "@/styles/general";
 export const CustomButton: React.FC<
   CustomButtonProps & TouchableHighlightProps
 > = ({ disabled, title, secondary, icon, ...props }) => {
-  const {isKeyboardVisible} = useKeyboardVisibility();
+  const { isKeyboardVisible } = useKeyboardVisibility();
   let disabledButtonStyle: ViewStyle[] = [];
   let visibleKeyBoardStyle: ViewStyle[] = [];
   let disabledTextStyle: TextStyle[] = [];
@@ -28,13 +28,14 @@ export const CustomButton: React.FC<
   }
 
   if (isKeyboardVisible) {
-    visibleKeyBoardStyle = [styles.keyboard]
+    visibleKeyBoardStyle = [styles.keyboard];
   }
 
   return (
     <TouchableHighlight
       disabled={disabled}
       {...props}
+      testID="custom-button"
       style={[
         styles.button,
         styles.bottom,

@@ -47,6 +47,7 @@ export default function Index() {
   return (
     <Container center button>
       <InputFactory
+        testID="currencyInput"
         editable={!load}
         multiline
         clearTextOnFocus
@@ -61,6 +62,7 @@ export default function Index() {
       />
       <View style={{ marginBottom: 10 }} />
       <InputFactory
+        testID="descriptionInput"
         editable={!load}
         multiline
         clearTextOnFocus
@@ -73,6 +75,7 @@ export default function Index() {
       />
       <View style={{ marginBottom: 30 }} />
       <ButtonFactory
+        testID="custom-button"
         title={t("continue")}
         onPress={handleContinue}
         typeButton={typeButtons.bottom}

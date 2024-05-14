@@ -11,7 +11,7 @@ export const InputButton: React.FC<
   CustomButtonProps & TouchableHighlightProps
 > = ({ title, ...props }) => {
   return (
-    <TouchableHighlight style={styles.inputButton} {...props}>
+    <TouchableHighlight testID="input-button" style={styles.inputButton} {...props}>
       <Text style={styles.inputButtonText}>{title}</Text>
     </TouchableHighlight>
   );

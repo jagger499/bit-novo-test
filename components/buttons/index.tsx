@@ -15,19 +15,19 @@ export const ButtonFactory: React.FC<
   CustomButtonProps & ViewProps & ButtonFactoryProps & TouchableHighlightProps
 > = ({ typeButton, ...props }) => {
   if (typeButton === typeButtons.qr) {
-    return <QRButton {...props} />
+    return <QRButton {...props} testID="qr-button" />;
   }
   if (typeButton === typeButtons.back) {
-    return <BackModalArrow {...props} />;
+    return <BackModalArrow {...props} testID="back-button" />;
   }
   if (typeButton === typeButtons.bottom) {
-    return <CustomButton {...props} />;
+    return <CustomButton {...props} testID="custom-button" />;
   }
   if (typeButton === typeButtons.modal) {
-    return <ModalButton {...props} />;
+    return <ModalButton {...props} testID="modal-button" />;
   }
   if (typeButton === typeButtons.input) {
-    return <InputButton {...props} />
+    return <InputButton {...props} testID="input-button" />;
   }
   return <></>;
 };

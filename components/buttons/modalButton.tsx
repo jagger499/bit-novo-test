@@ -23,6 +23,7 @@ export const ModalButton: React.FC<ViewProps & CustomButtonProps> = ({
     <Link
       href={{ pathname: "/modal", params: { type: modal } }}
       style={!isPhone ? currencyStyles.currencyModalButtton : {}}
+      testID={modal === "phone" ? "phone-modal-button" : "currency-modal-button"}
     >
       <View
         {...props}
