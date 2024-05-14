@@ -27,3 +27,10 @@ export interface PaymentState {
   identifier?: string;
   country?: SearchListItem
 }
+
+// action_names
+export const SET_URL = "SET_URL";
+export const SET_COUNTRY = "SET_COUNTRY";
+export const SET_IDENTIFIER = "SET_IDENTIFIER";
+export const SET_PAYMENT_INFO = "SET_PAYMENT_INFO";
+export const CLEAR_PAYMENT_INFO = "CLEAR_PAYMENT_INFO";

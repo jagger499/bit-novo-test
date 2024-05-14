@@ -1,8 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit';
-import rootReducer from '../reducers/paymentReducer';
+import { paymentReducer } from '../reducers/paymentReducer';
 
 export const store = configureStore({
-    reducer: rootReducer
+    reducer: paymentReducer
 })
 
-export type RootState = ReturnType<typeof rootReducer>;
+export type RootState = ReturnType<typeof paymentReducer>;

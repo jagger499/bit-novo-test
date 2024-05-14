@@ -1,25 +1,16 @@
-import { PaymentActionTypes, PaymentState } from "@/types/redux";
 import {
+  PaymentActionTypes,
+  PaymentState,
   CLEAR_PAYMENT_INFO,
   SET_COUNTRY,
   SET_IDENTIFIER,
   SET_PAYMENT_INFO,
   SET_URL,
-} from "../actions/paymentActions";
+} from "@/types/redux";
 import { config } from "@/config";
+import { initialState } from "../store/initialstate";
 
-const initialState: PaymentState = {
-  country: config.modals.phoneData[0],
-  payment: {
-    currency: config.modals.currencyData[1],
-    total: "",
-    description: "",
-  },
-  url: "",
-  identifier: ""
-};
-
-const paymentReducer = (
+export const paymentReducer = (
   state = initialState,
   action: PaymentActionTypes
 ): PaymentState => {
@@ -34,7 +25,7 @@ const paymentReducer = (
       return {
         ...state,
         country: action.payload,
-      }
+      };
     case SET_URL:
       return {
         ...state,
@@ -58,5 +49,3 @@ const paymentReducer = (
       return state;
   }
 };
-
-export default paymentReducer;

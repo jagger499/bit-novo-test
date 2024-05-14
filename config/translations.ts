@@ -2,6 +2,7 @@ import { TranslationsType } from "@/types/hooks/useLanguage";
 
 export const translations: TranslationsType = {
   es: {
+    shareMailInvalid: "El mail no es valido",
     shareMailNotSupport: "El cliente de correo electrónico no está disponible en este dispositivo.",
     shareWapNotSupport: "WhatsApp no está instalado en este dispositivo.",
     successModalTitle: "Solicitud enviada",
