@@ -47,7 +47,7 @@ export default function Index() {
   return (
     <Container center button>
       <InputFactory
-        editable
+        editable={!load}
         multiline
         clearTextOnFocus
         numberOfLines={3}
@@ -61,7 +61,7 @@ export default function Index() {
       />
       <View style={{ marginBottom: 10 }} />
       <InputFactory
-        editable
+        editable={!load}
         multiline
         clearTextOnFocus
         maxLength={140}
