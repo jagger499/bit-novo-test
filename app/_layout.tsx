@@ -1,37 +1,74 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/useColorScheme';
-
-// Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+import React from "react";
+import { Stack } from "expo-router";
+import { Provider } from "react-redux";
+import { store } from "../redux/store";
+import { Header } from "@/components/header";
+import { ButtonFactory } from "@/components/buttons";
+import { typeButtons } from "@/types/components/buttons";
+import { useFontAndSplashScreen } from "@/hooks/useFontAndSplashScreen";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-  const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+  const { fontsLoaded, fontError, onLayoutRootView } = useFontAndSplashScreen();
 
-  useEffect(() => {
-    if (loaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [loaded]);
-
-  if (!loaded) {
+  if (!fontsLoaded && !fontError) {
     return null;
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <Provider store={store}>
       <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
+        <Stack.Screen
+          name="index"
+          options={{
+            headerTitle: () => (
+              <Header onLayout={onLayoutRootView} title="Crear pago" />
+            ),
+            headerRight: () => (
+              <ButtonFactory
+                modal="currency"
+                typeButton={typeButtons.modal}
+                onLayout={onLayoutRootView}
+              />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="modal-qr"
+          options={{
+            headerTitle: () => (
+              <Header
+                onLayout={onLayoutRootView}
+                modal
+                title=""
+              />
+            ),
+            headerLeft: () => <ButtonFactory typeButton={typeButtons.back} />,
+            headerBackVisible: false,
+            presentation: "modal",
+          }}
+        />
+        <Stack.Screen
+          name="modal"
+          options={{
+            headerTitle: () => (
+              <Header
+                onLayout={onLayoutRootView}
+                modal
+                title="Selecciona una divisa"
+              />
+            ),
+            headerLeft: () => <ButtonFactory typeButton={typeButtons.back} />,
+            headerBackVisible: false,
+            presentation: "modal",
+          }}
+        />
+        <Stack.Screen
+          name="payment"
+          options={{
+            headerShown: false
+          }}
+        />
       </Stack>
-    </ThemeProvider>
+    </Provider>
   );
 }
